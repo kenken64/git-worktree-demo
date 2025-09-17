@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prompt Compressor</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; margin: 2rem; }
+      .container { max-width: 1000px; margin: 0 auto; }
+      textarea { width: 100%; min-height: 320px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 14px; padding: 12px; }
+      input[type="text"], input[type="number"] { width: 100%; padding: 10px; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .actions { margin-top: 16px; }
+      button { padding: 10px 16px; font-size: 14px; }
+      .error { color: #b00020; margin-bottom: 12px; }
+      label { font-weight: 600; display: block; margin: 12px 0 6px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Prompt Compressor</h1>
+      <p>Paste long Markdown, set your author intent and a reduction target, then compress.</p>
+      {% if error %}<div class="error">{{ error }}</div>{% endif %}
+      <form method="post" action="/compress">
+        <label for="intent">Author intent/focus</label>
+        <input type="text" id="intent" name="intent" placeholder="What should be preserved?" />
+
+        <label for="reduction">Desired reduction</label>
+        <input type="text" id="reduction" name="reduction" value="0.30" placeholder="e.g., 0.30 or 30%" />
+
+        <label for="text">Markdown input</label>
+        <textarea id="text" name="text" placeholder="# Title\n\nYour very long prompt..." required></textarea>
+
+        <div class="actions">
+          <button type="submit">Compress</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+

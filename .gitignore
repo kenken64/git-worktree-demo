@@ -1,6 +1,35 @@
 # Git worktrees
 *-worktree/
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
 # Node.js
 node_modules/
 npm-debug.log*
@@ -15,6 +44,8 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+!.env.example
 
 # IDE/Editor files
 .vscode/
@@ -22,6 +53,14 @@ yarn-error.log*
 *.swp
 *.swo
 *~
+
+# Project specific
+*.compressed.md
+original-prompt.compressed.md
+original-prompt.md
+*.compressed.txt
+output/
+previous_attempts/
 
 # OS generated files
 .DS_Store
@@ -31,16 +70,79 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+.AppleDouble
+.LSOverride
+Icon
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
 
 # Logs
 logs
 *.log
+logs/
+*.err
 
 # Build outputs
-dist/
-build/
 out/
 
 # Temporary files
 tmp/
 temp/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# API keys and secrets
+secrets/
+*.key
+*.pem
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache
+.cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Documentation
+docs/_build/
+site/
+
+# Package managers
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig

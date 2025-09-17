@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Compression Results</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; margin: 2rem; }
+      .container { max-width: 1200px; margin: 0 auto; }
+      .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+      .stat { background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 12px; text-align: center; }
+      pre, textarea { width: 100%; min-height: 320px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 14px; padding: 12px; white-space: pre-wrap; }
+      .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      a { text-decoration: none; }
+      .back { display: inline-block; margin-bottom: 16px; }
+      .label { font-weight: 600; margin: 12px 0 6px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a class="back" href="/">← New compression</a>
+      <h1>Compression Results</h1>
+      {% if intent %}<p><strong>Intent:</strong> {{ intent }}</p>{% endif %}
+
+      <div class="stats">
+        <div class="stat">
+          <div class="label">Original tokens</div>
+          <div>{{ original_tokens }}</div>
+        </div>
+        <div class="stat">
+          <div class="label">Target tokens</div>
+          <div>{{ target_tokens }} ({{ reduction }}%)</div>
+        </div>
+        <div class="stat">
+          <div class="label">Final tokens</div>
+          <div>{{ final_tokens }}</div>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div>
+          <div class="label">Original Markdown</div>
+          <textarea readonly>{{ original_text }}</textarea>
+        </div>
+        <div>
+          <div class="label">Compressed Markdown</div>
+          <textarea readonly>{{ compressed_text }}</textarea>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
