@@ -158,15 +158,15 @@ cat >> /tmp/save_button_addition.html << 'SAVE_ADDITION_EOF'
     </script>
 SAVE_ADDITION_EOF
 
-# Insert the save button section before the closing </body> tag
+# Insert the save button section before the closing </div> of the container
 # Create a temp file with the modified content
 {
-  # Read everything before </body>
-  sed '/<\/body>/,$d' "$RESULT_TEMPLATE"
-  # Add our save button content
-  cat /tmp/save_button_addition.html
+  # Read everything before the closing container </div>
+  sed '/^    <\/div>$/,$d' "$RESULT_TEMPLATE"
+  # Add our save button content (indented properly within the container)
+  sed 's/^/    /' /tmp/save_button_addition.html
   # Add the closing tags
-  echo ""
+  echo "    </div>"
   echo "  </body>"
   echo "</html>"
 } > "${RESULT_TEMPLATE}.new"
