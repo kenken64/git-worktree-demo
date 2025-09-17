@@ -158,17 +158,21 @@ cat >> /tmp/save_button_addition.html << 'SAVE_ADDITION_EOF'
     </script>
 SAVE_ADDITION_EOF
 
-# Insert the save button section before the closing </div> and </body> tags
-sed -i.tmp '
-  # Find the line with </div> followed by </body> and insert our content before it
-  /<\/div>$/{
-    N
-    /<\/div>\n.*<\/body>/{
-      # Read our addition and insert it before the closing tags
-      r /tmp/save_button_addition.html
-    }
-  }
-' "$RESULT_TEMPLATE"
+# Insert the save button section before the closing </body> tag
+# Create a temp file with the modified content
+{
+  # Read everything before </body>
+  sed '/<\/body>/,$d' "$RESULT_TEMPLATE"
+  # Add our save button content
+  cat /tmp/save_button_addition.html
+  # Add the closing tags
+  echo ""
+  echo "  </body>"
+  echo "</html>"
+} > "${RESULT_TEMPLATE}.new"
+
+# Replace the original file
+mv "${RESULT_TEMPLATE}.new" "$RESULT_TEMPLATE"
 
 # Clean up temporary files
 rm -f /tmp/save_button_addition.html "$RESULT_TEMPLATE.tmp"
