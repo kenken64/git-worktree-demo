@@ -37,7 +37,7 @@ def init_db():
     conn.execute('''
         CREATE TABLE IF NOT EXISTS compressed_prompts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            prompt_hash TEXT UNIQUE NOT NULL,
+            prompt_hash TEXT NOT NULL,
             compressed_data TEXT NOT NULL,
             original_size INTEGER NOT NULL,
             compressed_size INTEGER NOT NULL,
@@ -92,9 +92,6 @@ def save_compressed_prompt():
                 'compressed_size': compressed_size,
                 'compression_ratio': round(compressed_size / original_size, 3)
             }), 201
-
-        except sqlite3.IntegrityError:
-            return jsonify({'error': 'Prompt already exists'}), 409
 
         finally:
             conn.close()
