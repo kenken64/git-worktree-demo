@@ -127,12 +127,12 @@ cat >> /tmp/save_button_addition.html << 'SAVE_ADDITION_EOF'
           const result = await response.json();
 
           if (response.ok) {
-            showSaveStatus(`✅ Saved successfully! ID: ${result.id}, Compression ratio: ${result.compression_ratio}`, 'success');
+            showSaveStatus('✅ Saved successfully! ID: ' + result.id + ', Compression ratio: ' + result.compression_ratio, 'success');
           } else {
-            showSaveStatus(`❌ Error: ${result.error}`, 'error');
+            showSaveStatus('❌ Error: ' + result.error, 'error');
           }
         } catch (error) {
-          showSaveStatus(`❌ Network error: ${error.message}. Make sure the save app is running on port 5001.`, 'error');
+          showSaveStatus('❌ Network error: ' + error.message + '. Make sure the save app is running on port 5001.', 'error');
         } finally {
           // Re-enable button
           saveBtn.disabled = false;
@@ -145,7 +145,7 @@ cat >> /tmp/save_button_addition.html << 'SAVE_ADDITION_EOF'
         const saveMessage = saveStatus.querySelector('.save-message');
 
         saveMessage.textContent = message;
-        saveStatus.className = `save-status ${type}`;
+        saveStatus.className = 'save-status ' + type;
         saveStatus.style.display = 'block';
 
         // Auto-hide success messages after 5 seconds
