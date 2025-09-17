@@ -14,6 +14,11 @@
       button { padding: 10px 16px; font-size: 14px; }
       .error { color: #b00020; margin-bottom: 12px; }
       label { font-weight: 600; display: block; margin: 12px 0 6px; }
+      .progress-container { display: none; margin-top: 16px; }
+      .progress-bar { width: 100%; height: 20px; background-color: #e0e0e0; border-radius: 10px; overflow: hidden; }
+      .progress-fill { height: 100%; background-color: #2196f3; transition: width 0.3s ease; }
+      .progress-text { margin-top: 8px; font-size: 14px; color: #666; }
+      button:disabled { opacity: 0.6; cursor: not-allowed; background-color: #ccc; }
     </style>
   </head>
   <body>
@@ -32,10 +37,54 @@
         <textarea id="text" name="text" placeholder="# Title\n\nYour very long prompt..." required></textarea>
 
         <div class="actions">
-          <button type="submit">Compress</button>
+          <button type="submit" id="compressBtn">Compress</button>
+        </div>
+
+        <div class="progress-container" id="progressContainer">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text" id="progressText">Processing...</div>
         </div>
       </form>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const compressBtn = document.getElementById('compressBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+
+        form.addEventListener('submit', function(e) {
+          // Disable the button and show progress
+          compressBtn.disabled = true;
+          compressBtn.textContent = 'Compressing...';
+          progressContainer.style.display = 'block';
+
+          // Simulate progress animation
+          let progress = 0;
+          const interval = setInterval(function() {
+            progress += Math.random() * 15;
+            if (progress > 90) progress = 90; // Don't reach 100% until completion
+
+            progressFill.style.width = progress + '%';
+
+            if (progress < 30) {
+              progressText.textContent = 'Analyzing text structure...';
+            } else if (progress < 60) {
+              progressText.textContent = 'Rating chunks by importance...';
+            } else if (progress < 90) {
+              progressText.textContent = 'Compressing content...';
+            }
+          }, 200);
+
+          // Store interval ID to clear it if needed
+          form.progressInterval = interval;
+        });
+      });
+    </script>
   </body>
 </html>
 
