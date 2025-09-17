@@ -85,17 +85,13 @@ cat > /tmp/save_button_addition.html << 'SAVE_ADDITION_EOF'
         const saveStatus = document.getElementById('saveStatus');
         const saveMessage = saveStatus.querySelector('.save-message');
 
-        // Get the compressed text from the textarea
-        const compressedTextElement = document.querySelector('textarea[readonly]');
-        if (!compressedTextElement || compressedTextElement.value.includes('{{ original_text }}')) {
-          // Try to find the second textarea (compressed text)
-          const textareas = document.querySelectorAll('textarea[readonly]');
-          if (textareas.length < 2) {
-            showSaveStatus('Error: Could not find compressed text to save', 'error');
-            return;
-          }
-          compressedTextElement = textareas[1]; // Second textarea should be compressed text
+        // Get the compressed text from the textarea (second one)
+        const textareas = document.querySelectorAll('textarea[readonly]');
+        if (textareas.length < 2) {
+          showSaveStatus('Error: Could not find compressed text to save', 'error');
+          return;
         }
+        const compressedTextElement = textareas[1]; // Second textarea should be compressed text
 
         const compressedText = compressedTextElement.value;
 
