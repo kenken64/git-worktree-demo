@@ -1,0 +1,10 @@
+# Prevent automatic merging between specialized branches
+# This forces manual conflict resolution for any merge attempts
+
+# Mark core application files as non-mergeable to prevent accidental cross-branch merges
+*.py merge=no-auto-merge
+*.sh merge=no-auto-merge
+*.md merge=no-auto-merge
+*.txt merge=no-auto-merge
+*.db merge=no-auto-merge
+*.pid merge=no-auto-merge
