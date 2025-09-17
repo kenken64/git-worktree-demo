@@ -69,7 +69,7 @@ if [[ "$MODE" == "flask" ]]; then
   export FLASK_RUN_PORT="${PORT:-5000}"
   CMD=("$VENV_PY" -m flask run)
 else
-  CMD=("$VENV_PY" "$DIR/app.py")
+  CMD=("$VENV_PY" "app.py")
 fi
 
 # Run in background
