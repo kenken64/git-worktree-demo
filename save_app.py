@@ -11,19 +11,15 @@ app = Flask(__name__)
 # Add CORS headers to all responses
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.set('Access-Control-Allow-Origin', '*')
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
 # Handle preflight OPTIONS requests
 @app.route('/save-prompt', methods=['OPTIONS'])
 def handle_options():
-    response = jsonify({'status': 'ok'})
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'POST,OPTIONS')
-    return response
+    return jsonify({'status': 'ok'})
 
 DATABASE = 'prompts.db'
 
