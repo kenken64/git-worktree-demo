@@ -49,5 +49,122 @@
       </div>
     </div>
   </body>
+
+      <!-- Save to DB Section -->
+      <div class="save-section" style="margin-top: 20px; text-align: center;">
+        <button id="saveToDbBtn" class="save-button" onclick="saveToDatabase()">Save Compressed Text to Database</button>
+        <div id="saveStatus" class="save-status" style="display: none; margin-top: 10px;">
+          <div class="save-message"></div>
+        </div>
+      </div>
+
+    <style>
+      .save-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background-color 0.3s;
+      }
+      .save-button:hover {
+        background-color: #45a049;
+      }
+      .save-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      .save-status {
+        padding: 10px;
+        border-radius: 4px;
+        font-weight: 500;
+      }
+      .save-status.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .save-status.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+    </style>
+
+    <script>
+      async function saveToDatabase() {
+        const saveBtn = document.getElementById('saveToDbBtn');
+        const saveStatus = document.getElementById('saveStatus');
+        const saveMessage = saveStatus.querySelector('.save-message');
+
+        // Get the compressed text from the textarea
+        const compressedTextElement = document.querySelector('textarea[readonly]');
+        if (!compressedTextElement || compressedTextElement.value.includes('{{ original_text }}')) {
+          // Try to find the second textarea (compressed text)
+          const textareas = document.querySelectorAll('textarea[readonly]');
+          if (textareas.length < 2) {
+            showSaveStatus('Error: Could not find compressed text to save', 'error');
+            return;
+          }
+          compressedTextElement = textareas[1]; // Second textarea should be compressed text
+        }
+
+        const compressedText = compressedTextElement.value;
+
+        if (!compressedText || compressedText.trim() === '') {
+          showSaveStatus('Error: No compressed text found to save', 'error');
+          return;
+        }
+
+        // Disable button and show loading
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving...';
+
+        try {
+          const response = await fetch('http://localhost:5001/save-prompt', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              prompt: compressedText
+            })
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showSaveStatus(`✅ Saved successfully! ID: ${result.id}, Compression ratio: ${result.compression_ratio}`, 'success');
+          } else {
+            showSaveStatus(`❌ Error: ${result.error}`, 'error');
+          }
+        } catch (error) {
+          showSaveStatus(`❌ Network error: ${error.message}. Make sure the save app is running on port 5001.`, 'error');
+        } finally {
+          // Re-enable button
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Save Compressed Text to Database';
+        }
+      }
+
+      function showSaveStatus(message, type) {
+        const saveStatus = document.getElementById('saveStatus');
+        const saveMessage = saveStatus.querySelector('.save-message');
+
+        saveMessage.textContent = message;
+        saveStatus.className = `save-status ${type}`;
+        saveStatus.style.display = 'block';
+
+        // Auto-hide success messages after 5 seconds
+        if (type === 'success') {
+          setTimeout(() => {
+            saveStatus.style.display = 'none';
+          }, 5000);
+        }
+      }
+    </script>
 </html>
 

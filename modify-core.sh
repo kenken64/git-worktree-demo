@@ -6,8 +6,7 @@ set -e
 
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-RESULT_TEMPLATE="$PROJECT_ROOT/templates/result.html"
+RESULT_TEMPLATE="$SCRIPT_DIR/templates/result.html"
 BACKUP_FILE="$RESULT_TEMPLATE.backup"
 SAVE_ENDPOINT="http://localhost:5001/save-prompt"
 
